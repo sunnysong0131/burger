@@ -3,14 +3,14 @@ Here is where you create all the functions that will do the routing for your app
 */
 var express = require('express');
 var router = express.Router();
-var cat = require('../models/burger.js');
+var burger = require('../models/burger.js');
 
 router.get('/', function (req, res) {
 	res.redirect('/burgers');
 });
 
 router.get('/burgers', function (req, res) {
-	cat.all(function (data) {
+	burger.all(function (data) {
 		var hbsObject = { burgers: data };
 		console.log(hbsObject);
 		res.render('index', hbsObject);
@@ -18,7 +18,7 @@ router.get('/burgers', function (req, res) {
 });
 
 router.post('/burgers/create', function (req, res) {
-	cat.create(['burger_name'], [req.body.burger_name], function () {
+	burger.create(['burger_name'], [req.body.burger_name], function () {
 		res.redirect('/burgers');
 	});
 });
@@ -28,7 +28,7 @@ router.put('/burgers/update/:id', function (req, res) {
 
 	console.log('condition', condition);
 
-	cat.update({ devoured: req.body.sleepy }, condition, function () {
+	burger.update({ devoured: req.body.devoured }, condition, function () {
 		res.redirect('/burgers');
 	});
 });
